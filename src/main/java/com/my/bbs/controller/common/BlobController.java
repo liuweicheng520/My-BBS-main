@@ -2,6 +2,8 @@ package com.my.bbs.controller.common;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -21,11 +23,13 @@ import java.nio.charset.Charset;
 
 @RestController
 @RequestMapping("/blob")
+@Api(value = "fileUpload", tags = "文件上传")
 public class BlobController {
     @Autowired
     BlobContainerClient blobContainerClient;
 
     @PostMapping("/writeBlobFile")
+    @ApiOperation("文件上传")
     public String writeBlobFile(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = java.util.UUID.randomUUID() + "—" + file.getOriginalFilename();
 // Get a reference to a blob
