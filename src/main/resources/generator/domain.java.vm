@@ -1,0 +1,53 @@
+package ${package}.entity;
+
+import javax.persistence.Column;
+import java.util.Date;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
+import io.swagger.annotations.ApiModelProperty;
+
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+@Getter
+@Setter
+@Table(name = "${tableName}")
+public class ${className} implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+	// $column.comments
+#if(${column.tableField}=="id")
+	@Id
+	@GeneratedValue(generator = "JDBC")
+#end
+#if(${column.tableField}=="create_time")
+	@TableField(fill = FieldFill.INSERT)
+	@Column(name = "${column.tableField}")
+#end
+#if(${column.tableField}=="update_time")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@Column(name = "${column.tableField}")
+#end
+#if(${column.tableField}=="is_del")
+	@TableLogic
+	@Column(name = "${column.tableField}")
+#end
+#if(${column.tableField}!="id"&&${column.tableField}!="create_time"&&${column.tableField}!="update_time"&&${column.tableField}!="is_del")
+	@Column(name = "${column.tableField}")
+#end
+	@ApiModelProperty(name="$column.attrname",value="$column.comments")
+	private $column.attrType $column.attrname;
+
+#end
+
+}

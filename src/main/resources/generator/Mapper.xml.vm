@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package}.mapper.${className}Mapper">
+
+    <select id="findById" resultType="${package}.entity.${className}">
+        select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName}
+        where ${pk.columnName} = #{value} and del_flag = 0
+    </select>
+
+    <select id="findByMap" resultType="${package}.entity.${className}">
+        select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName}
+        <where>
+#foreach($column in $columns)
+            <if test="$column.attrname != null and $column.attrname.trim() != ''"> and $column.columnName = #{$column.attrname} </if>
+#end
+            and del_flag = 0
+        </where>
+        order by ${pk.columnName} desc limit 1
+    </select>
+
+    <select id="list" resultType="${package}.entity.${className}">
+        select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from ${tableName}
+        <where>
+#foreach($column in $columns)
+            <if test="$column.attrname != null and $column.attrname.trim() != ''">and $column.columnName = #{$column.attrname}</if>
+#end
+            and del_flag = 0
+        </where>
+        <choose>
+            <when test="orderBySql != null">
+                order by ${orderBySql}
+            </when>
+            <otherwise>
+                order by ${pk.columnName} desc
+            </otherwise>
+        </choose>
+        <if test="limitCondition != null">
+            ${limitCondition}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="${package}.entity.${className}"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
+        insert into ${tableName}
+        (<trim suffixOverrides=",">
+#foreach($column in $columns)
+#if($column.columnName != $pk.columnName || $pk.extra != 'auto_increment')
+#if($column.attrname != 'isDel')
+            <if test="$column.attrname != null">`$column.columnName`,</if>
+#end
+#end
+#end
+        </trim>)
+        values
+        (<trim suffixOverrides=",">
+#foreach($column in $columns)
+#if($column.columnName != $pk.columnName || $pk.extra != 'auto_increment')
+#if($column.attrname != 'isDel')
+            <if test="$column.attrname != null">#{$column.attrname},</if>
+#end
+#end
+#end
+        </trim>)
+    </insert>
+
+    <update id="updatez" parameterType="${package}.entity.${className}">
+        update ${tableName}
+        <set>
+#foreach($column in $columns)
+#if($column.columnName != $pk.columnName)
+            <if test="$column.attrname != null">`$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()),#end</if>
+#end
+#end
+        </set>
+        where ${pk.columnName} = #{${pk.attrname}} and del_flag = 0
+    </update>
+
+    <delete id="deletez">
+        update ${tableName}
+        <set>
+            del_flag = 1
+        </set>
+        where ${pk.columnName} = #{value}
+    </delete>
+
+    <delete id="batchDelete">
+        update ${tableName}
+        <set>
+            del_flag = 1
+        </set>
+        where ${pk.columnName} in
+        <foreach item="${pk.attrname}" collection="array" open="(" separator="," close=")">
+            #{${pk.attrname}}
+        </foreach>
+    </delete>
+
+</mapper>
