@@ -135,29 +135,6 @@
                 </th:block>
             </div>
         </div>
-        <div class="layui-col-md4">
-            
-            <!-- 4.渲染本周热议列表 -->
-            <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">本周热议</dt>
-                <th:block th:if="${#lists.isEmpty(hotTopicBBSPostList)}">
-                    <!-- 无数据时 -->
-                    <div class="fly-none">没有相关数据</div>
-                </th:block>
-                <th:block th:unless="${#lists.isEmpty(hotTopicBBSPostList)}">
-                    <th:block th:each="bbsEntity : ${hotTopicBBSPostList}">
-                        <dd>
-                            <a th:href="@{'/detail/'+${bbsEntity.postId}}"
-                               th:text="${bbsEntity.postTitle}">My-BBS开源啦</a>
-                            <span><i class="iconfont icon-pinglun1"></i> <th:block
-                                    th:text="${bbsEntity.postComments}"></th:block></span>
-                        </dd>
-                    </th:block>
-                </th:block>
-            </dl>
-
-
-        </div>
     </div>
 </div>
 
