@@ -2,6 +2,8 @@ package com.my.bbs.controller.common;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
+import com.my.bbs.util.Result;
+import com.my.bbs.util.ResultGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +32,14 @@ public class BlobController {
 
     @PostMapping("/writeBlobFile")
     @ApiOperation("文件上传")
-    public String writeBlobFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public Result writeBlobFile(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = java.util.UUID.randomUUID() + "—" + file.getOriginalFilename();
 // Get a reference to a blob
         BlobClient blobClient = blobContainerClient.getBlobClient(fileName);
         blobClient.upload(file.getInputStream());
-        return "liuy24-asc4gffvfjehgsg0.z01.azurefd.net/liuy24/" + fileName;
+        Result resultSuccess = ResultGenerator.genSuccessResult();
+        resultSuccess.setResultCode(0);
+        resultSuccess.setData("liuy24-asc4gffvfjehgsg0.z01.azurefd.net/liuy24/" + fileName);
+        return resultSuccess;
     }
 }

@@ -41,7 +41,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-form-item layui-form-text">
+                            <div class="layui-form-item" style="margin-top: 20px">
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                                    <div class="layui-upload-list">
+                                        <img style="height:95px;width: 95px;"  class="layui-upload-img" id="demo1">
+                                        <p id="demoText"></p>
+                                    </div>
+                                    <div style="width: 95px;">
+                                        <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="demo">
+                                            <div class="layui-progress-bar" lay-percent=""></div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text" style="margin-top: 26px">
                                 <div class="layui-input-block">
                                     <div id="wangEditor" name="postContent" required
                                          placeholder="详细描述"
@@ -82,9 +95,10 @@
 <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
 
 <script type="text/javascript">
-    layui.use(['layer', 'element', 'jquery', 'form'], function () {
-        var layer = layui.layer, $ = layui.$, element = layui.element, form = layui.form;
+    layui.use(['layer', 'element', 'jquery', 'form','upload'], function () {
+        var layer = layui.layer, $ = layui.$, element = layui.element,upload = layui.upload, form = layui.form;
         var editorD;
+
 
         //富文本编辑器 用于商品详情编辑
         const E = window.wangEditor;
@@ -130,6 +144,47 @@
             }
         }
         editorD.create();
+
+        //常规使用 - 普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: 'http://localhost:8088/blob/writeBlobFile' //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+
+                element.progress('demo', '0%'); //进度条复位
+                layer.msg('上传中', {icon: 16, time: 0});
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.resultCode >0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功的一些操作
+                //……
+                element.progress('demo', '100%');
+                layer.msg('上传成功', {icon: 16, time: 1000});
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+            //进度条
+            , progress: function (n, elem, e) {
+                element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                if (n == 100) {
+                    layer.msg('上传完毕', {icon: 1});
+                }
+            }
+        });
+
 
         window.addBBSPost = function () {
             var postTitle = $("#postTitle").val();
