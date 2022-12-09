@@ -5,10 +5,12 @@ import com.my.bbs.common.ServiceResultEnum;
 import com.my.bbs.entity.BBSPost;
 import com.my.bbs.entity.BBSPostCategory;
 import com.my.bbs.entity.BBSUser;
+import com.my.bbs.entity.TbBbsPost;
 import com.my.bbs.service.*;
 import com.my.bbs.util.PageResult;
 import com.my.bbs.util.Result;
 import com.my.bbs.util.ResultGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -32,6 +34,8 @@ public class BBSPostController {
     private BBSPostCollectService bbsPostCollectService;
     @Resource
     private BBSPostCommentService bbsPostCommentService;
+    @Autowired
+    private TbBbsPostService tbBbsPostService;
 
     @GetMapping("detail/{postId}")
     public String postDetail(HttpServletRequest request, @PathVariable(value = "postId") Long postId,
@@ -112,6 +116,7 @@ public class BBSPostController {
                           @RequestParam("postCategoryId") Integer postCategoryId,
                           @RequestParam("postContent") String postContent,
                           @RequestParam("verifyCode") String verifyCode,
+                          @RequestParam("mediaUrl") String mediaUrl,
                           HttpSession httpSession) {
         if (!StringUtils.hasLength(postTitle)) {
             return ResultGenerator.genFailResult("postTitle参数错误");
@@ -132,18 +137,21 @@ public class BBSPostController {
         if (postContent.trim().length() > 100000) {
             return ResultGenerator.genFailResult("内容过长");
         }
+
         String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
         if (!StringUtils.hasLength(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
         BBSUser bbsUser = (BBSUser) httpSession.getAttribute(Constants.USER_SESSION_KEY);
-        BBSPost bbsPost = new BBSPost();
-        bbsPost.setPublishUserId(bbsUser.getUserId());
-        bbsPost.setPostTitle(postTitle);
-        bbsPost.setPostContent(postContent);
-        bbsPost.setPostCategoryId(postCategoryId);
-        bbsPost.setPostCategoryName(bbsPostCategory.getCategoryName());
-        if (bbsPostService.savePost(bbsPost) > 0) {
+        TbBbsPost tbBbsPost = new TbBbsPost();
+        tbBbsPost.setPublishUserId(bbsUser.getUserId());
+        tbBbsPost.setPostTitle(postTitle);
+        tbBbsPost.setPostContent(postContent);
+        tbBbsPost.setPostCategoryId(postCategoryId);
+        tbBbsPost.setPostCategoryName(bbsPostCategory.getCategoryName());
+        tbBbsPost.setMediaUrl(mediaUrl);
+        tbBbsPost.setCreateTime(new Date());
+        if (tbBbsPostService.saved(tbBbsPost) > 0) {
             httpSession.removeAttribute(Constants.VERIFY_CODE_KEY);//清空session中的验证码信息
             return ResultGenerator.genSuccessResult();
         } else {

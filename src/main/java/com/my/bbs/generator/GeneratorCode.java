@@ -39,7 +39,7 @@ GeneratorCode {
 
 
 	public static void main(String[] args) throws Exception {
-		genCodeByTableNames("admin", "tb_bbs_post_test");//
+		genCodeByTableNames("admin", "tb_bbs_post");//
 	}
 
 	public static void genCodeByTableNames(String platformUrl, String... tableNames) throws Exception {
