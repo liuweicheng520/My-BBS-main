@@ -2,11 +2,15 @@ package com.my.bbs.controller.rest;
 
 import com.my.bbs.common.Constants;
 import com.my.bbs.common.ServiceResultEnum;
+import com.my.bbs.config.TextAnalyticsClientUtil;
 import com.my.bbs.entity.BBSPostComment;
 import com.my.bbs.entity.BBSUser;
+import com.my.bbs.entity.TbPostComment;
 import com.my.bbs.service.BBSPostCommentService;
+import com.my.bbs.service.TbPostCommentService;
 import com.my.bbs.util.Result;
 import com.my.bbs.util.ResultGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +20,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 public class BBSPostCommentController {
 
     @Resource
     private BBSPostCommentService bbsPostCommentService;
+    @Autowired
+    private TbPostCommentService tbPostCommentService;
+    @Autowired
+    private TextAnalyticsClientUtil analyticsClientUtil;
 
     @PostMapping("/replyPost")
     @ResponseBody
@@ -45,13 +54,15 @@ public class BBSPostCommentController {
         }
         BBSUser bbsUser = (BBSUser) httpSession.getAttribute(Constants.USER_SESSION_KEY);
 
-        BBSPostComment bbsPostComment = new BBSPostComment();
+        TbPostComment bbsPostComment = new TbPostComment();
         bbsPostComment.setCommentBody(commentBody);
         bbsPostComment.setCommentUserId(bbsUser.getUserId());
         bbsPostComment.setParentCommentUserId(parentCommentUserId);
         bbsPostComment.setPostId(postId);
+        bbsPostComment.setSentiment(analyticsClientUtil.analyzeSentiment(bbsPostComment.getCommentBody()));
+        bbsPostComment.setCommentCreateTime(new Date());
 
-        if (bbsPostCommentService.addPostComment(bbsPostComment)) {
+        if (tbPostCommentService.saved(bbsPostComment) > 0) {
             httpSession.removeAttribute(Constants.VERIFY_CODE_KEY);
             return ResultGenerator.genSuccessResult();
         } else {
@@ -71,7 +82,7 @@ public class BBSPostCommentController {
 
         BBSUser bbsUser = (BBSUser) httpSession.getAttribute(Constants.USER_SESSION_KEY);
 
-        if (bbsPostCommentService.delPostComment(commentId,bbsUser.getUserId())) {
+        if (bbsPostCommentService.delPostComment(commentId, bbsUser.getUserId())) {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");

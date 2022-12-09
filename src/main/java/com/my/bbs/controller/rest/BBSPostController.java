@@ -1,7 +1,16 @@
 package com.my.bbs.controller.rest;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.microsoft.azure.cognitiveservices.vision.contentmoderator.ContentModeratorClient;
+import com.microsoft.azure.cognitiveservices.vision.contentmoderator.ContentModeratorManager;
+import com.microsoft.azure.cognitiveservices.vision.contentmoderator.TextModerations;
+import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.AzureRegionBaseUrl;
+import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.Screen;
 import com.my.bbs.common.Constants;
 import com.my.bbs.common.ServiceResultEnum;
+import com.my.bbs.config.ContentModeratorClientUtil;
 import com.my.bbs.entity.BBSPost;
 import com.my.bbs.entity.BBSPostCategory;
 import com.my.bbs.entity.BBSUser;
@@ -10,6 +19,9 @@ import com.my.bbs.service.*;
 import com.my.bbs.util.PageResult;
 import com.my.bbs.util.Result;
 import com.my.bbs.util.ResultGenerator;
+import com.nimbusds.oauth2.sdk.ParseException;
+import com.nimbusds.oauth2.sdk.util.JSONUtils;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +49,8 @@ public class BBSPostController {
     private BBSPostCommentService bbsPostCommentService;
     @Autowired
     private TbBbsPostService tbBbsPostService;
+    @Autowired
+    private ContentModeratorClientUtil contentModeratorClientUtil;
 
     @GetMapping("detail/{postId}")
     public String postDetail(HttpServletRequest request, @PathVariable(value = "postId") Long postId,
@@ -112,11 +127,12 @@ public class BBSPostController {
 
     @PostMapping("/addPost")
     @ResponseBody
+    @ApiOperation("addPost")
     public Result addPost(@RequestParam("postTitle") String postTitle,
                           @RequestParam("postCategoryId") Integer postCategoryId,
                           @RequestParam("postContent") String postContent,
                           @RequestParam("verifyCode") String verifyCode,
-                          @RequestParam("mediaUrl") String mediaUrl,
+                          @RequestParam(value = "mediaUrl", required = false) String mediaUrl,
                           HttpSession httpSession) {
         if (!StringUtils.hasLength(postTitle)) {
             return ResultGenerator.genFailResult("postTitle参数错误");
@@ -137,6 +153,12 @@ public class BBSPostController {
         if (postContent.trim().length() > 100000) {
             return ResultGenerator.genFailResult("内容过长");
         }
+
+        Screen screen = contentModeratorClientUtil.reviewText(postContent.trim());
+        if (screen.terms() != null && screen.terms().size() > 0) {
+            return ResultGenerator.genFailResult("contains profanity !  suspected: " + screen.terms().get(0).term());
+        }
+
 
         String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
         if (!StringUtils.hasLength(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
@@ -227,5 +249,12 @@ public class BBSPostController {
         } else {
             return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
         }
+    }
+
+    public static void main(String[] args) throws ParseException {
+        ContentModeratorClient client = ContentModeratorManager.authenticate(AzureRegionBaseUrl.fromString("https://liuy24.cognitiveservices.azure.com/"),
+                "3dba8ca6b2714351bbbd91e3a37408c4");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     }
 }
