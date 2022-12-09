@@ -56,6 +56,7 @@ public class BBSPostCommentController {
         }
         BBSUser bbsUser = (BBSUser) httpSession.getAttribute(Constants.USER_SESSION_KEY);
 
+        System.out.println(TranslatorUtil.translate(commentBody));
         TbPostComment bbsPostComment = new TbPostComment();
         bbsPostComment.setCommentBody(TranslatorUtil.translate(commentBody));
         bbsPostComment.setCommentUserId(bbsUser.getUserId());
