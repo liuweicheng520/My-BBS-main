@@ -43,6 +43,7 @@ public class TextAnalyticsClientUtil {
      * @return 1 = positive; 0 = neutral; -1 = negative
      */
     public Integer analyzeSentiment(String content) {
+
         SentimentConfidenceScores sentimentConfidenceScores = textAnalyticsClient.analyzeSentiment(content).getConfidenceScores();
         final double negativeScore = sentimentConfidenceScores.getNegative();
         final double neutralScore = sentimentConfidenceScores.getNeutral();

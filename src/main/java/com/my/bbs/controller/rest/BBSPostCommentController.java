@@ -3,6 +3,7 @@ package com.my.bbs.controller.rest;
 import com.my.bbs.common.Constants;
 import com.my.bbs.common.ServiceResultEnum;
 import com.my.bbs.config.TextAnalyticsClientUtil;
+import com.my.bbs.config.TranslatorUtil;
 import com.my.bbs.entity.BBSPostComment;
 import com.my.bbs.entity.BBSUser;
 import com.my.bbs.entity.TbPostComment;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 
 @Controller
@@ -38,7 +40,7 @@ public class BBSPostCommentController {
                             @RequestParam(value = "parentCommentUserId", required = false) Long parentCommentUserId,
                             @RequestParam("commentBody") String commentBody,
                             @RequestParam("verifyCode") String verifyCode,
-                            HttpSession httpSession) {
+                            HttpSession httpSession) throws IOException {
         if (null == postId || postId < 0) {
             return ResultGenerator.genFailResult("postId参数错误");
         }
@@ -55,7 +57,7 @@ public class BBSPostCommentController {
         BBSUser bbsUser = (BBSUser) httpSession.getAttribute(Constants.USER_SESSION_KEY);
 
         TbPostComment bbsPostComment = new TbPostComment();
-        bbsPostComment.setCommentBody(commentBody);
+        bbsPostComment.setCommentBody(TranslatorUtil.translate(commentBody));
         bbsPostComment.setCommentUserId(bbsUser.getUserId());
         bbsPostComment.setParentCommentUserId(parentCommentUserId);
         bbsPostComment.setPostId(postId);
