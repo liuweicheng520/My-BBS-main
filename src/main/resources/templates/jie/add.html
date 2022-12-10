@@ -29,11 +29,11 @@
                                     <label class="layui-form-label">所在专栏</label>
                                     <div class="layui-input-block">
                                         <select name="class" lay-filter="column"
-                                                id="postCategoryId">
-                                            <option value="0"></option>
+                                                id="postCategoryId" onclick="selectCategoryId()" >
+                                            <option value="0" id="optionId"></option>
                                             <th:block th:unless="${null == bbsPostCategories}">
                                                 <th:block th:each="c : ${bbsPostCategories}">
-                                                    <option th:value="${c.categoryId}" th:text="${c.categoryName}" onclick="selectCategoryId()">提问
+                                                    <option th:value="${c.categoryId}" th:text="${c.categoryName}" onclick="selectCategoryId()" >提问
                                                     </option>
                                                 </th:block>
                                             </th:block>
@@ -57,7 +57,7 @@
                                 <div class="layui-upload" id="upload2" hidden>
                                     <button type="button" class="layui-btn" id="test2" value="2">上传视频</button>
                                     <div class="layui-upload-list">
-                                        <img style="height: 150px;width: 150px;"  class="layui-upload-img" id="demo2">
+                                        <video style="height: 500px;width: 640px;" controls  id="demo2"></video>
                                         <p id="demoText1"></p>
                                     </div>
                                     <div style="width: 95px;">
@@ -69,7 +69,7 @@
                                 <div class="layui-upload" id="upload3" hidden>
                                     <button type="button" class="layui-btn" id="test3" value="3" >上传音频</button>
                                     <div class="layui-upload-list">
-                                        <img style="height:150px;width: 150px;"  class="layui-upload-img" id="demo3">
+                                        <audio style="height:50px;width: 300px;" controls id="demo3"></audio>
                                         <p id="demoText2"></p>
                                     </div>
                                     <div style="width: 95px;">
@@ -122,7 +122,8 @@
 
 <script type="text/javascript">
     layui.use(['layer', 'element', 'jquery', 'form','upload'], function () {
-        var layer = layui.layer, $ = layui.$, element = layui.element,upload = layui.upload, form = layui.form;
+        var layer = layui.layer, $ = layui.$, element = layui.element,upload = layui.upload, form = layui.form
+        select=layui.selectors;
         var editorD;
 
         //富文本编辑器 用于商品详情编辑
@@ -169,6 +170,23 @@
             }
         }
         editorD.create();
+        form.on('select',function () {
+           // alert($('#postCategoryId option:selected').val());
+            var postCategoryId = $('#postCategoryId option:selected').val();
+            if (postCategoryId === "4") {
+                $("#upload1").show();
+                $("#upload2").hide();
+                $("#upload3").hide();
+            } else if (postCategoryId === "3") {
+                $("#upload1").hide();
+                $("#upload2").show();
+                $("#upload3").hide();
+            } else if (postCategoryId === "6"){
+                $("#upload1").hide();
+                $("#upload2").hide();
+                $("#upload3").show();
+            }
+        })
 
         //常规使用 - 普通图片上传
         var uploadInst = upload.render({
@@ -209,6 +227,94 @@
                 }
             }
         });
+
+
+        //常规使用 - 普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test2'
+            , url: 'http://localhost:8088/blob/writeBlobFile' //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+            ,accept: 'video' //视频
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo2').attr('src', result); //图片链接（base64）
+                });
+
+                element.progress('demo', '0%'); //进度条复位
+                layer.msg('上传中', {icon: 16, time: 0});
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.resultCode >0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功的一些操作
+                //……
+                element.progress('demo', '100%');
+                layer.msg('上传成功', {icon: 16, time: 1000});
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+            //进度条
+            , progress: function (n, elem, e) {
+                element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                if (n == 100) {
+                    layer.msg('上传完毕', {icon: 1});
+                }
+            }
+        });
+
+
+
+        //常规使用 - 普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test3'
+            , url: 'http://localhost:8088/blob/writeBlobFile' //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+            ,accept: 'audio'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo3').attr('src', result); //图片链接（base64）
+                });
+
+                element.progress('demo', '0%'); //进度条复位
+                layer.msg('上传中', {icon: 16, time: 0});
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.resultCode >0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功的一些操作
+                //……
+                element.progress('demo', '100%');
+                layer.msg('上传成功', {icon: 16, time: 1000});
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+            //进度条
+            , progress: function (n, elem, e) {
+                element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                if (n == 100) {
+                    layer.msg('上传完毕', {icon: 1});
+                }
+            }
+        });
+
+
+
 
 
         window.addBBSPost = function () {
@@ -258,23 +364,6 @@
         }
     });
 
-
-    function selectCategoryId() {
-        var postCategoryId = $('#postCategoryId option:selected').val();
-        if (postCategoryId.value === "4") {
-            $("#upload1").show();
-            $("#upload2").hide();
-            $("#upload3").hide();
-        } else if (postCategoryId.value === "3") {
-            $("#upload1").hide();
-            $("#upload2").show();
-            $("#upload3").hide();
-        } else if (postCategoryId.value === "6"){
-            $("#upload1").hide();
-            $("#upload2").hide();
-            $("#upload3").show();
-        }
-    }
 
 </script>
 </body>
