@@ -42,8 +42,8 @@
                                 </div>
                             </div>
                             <div class="layui-form-item" style="margin-top: 20px">
-                                <div class="layui-upload">
-                                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                                <div class="layui-upload" id="upload1" hidden>
+                                    <button type="button" class="layui-btn" id="test1" value="1">上传图片</button>
                                     <div class="layui-upload-list">
                                         <img style="height:95px;width: 95px;"  class="layui-upload-img" id="demo1">
                                         <p id="demoText"></p>
@@ -53,7 +53,33 @@
                                             <div class="layui-progress-bar" lay-percent=""></div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
+                                <div class="layui-upload" id="upload2" hidden>
+                                    <button type="button" class="layui-btn" id="test2" value="2">上传视频</button>
+                                    <div class="layui-upload-list">
+                                        <img style="height: 150px;width: 150px;"  class="layui-upload-img" id="demo2">
+                                        <p id="demoText1"></p>
+                                    </div>
+                                    <div style="width: 95px;">
+                                        <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="demo">
+                                            <div class="layui-progress-bar" lay-percent=""></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-upload" id="upload3" hidden>
+                                    <button type="button" class="layui-btn" id="test3" value="3" >上传音频</button>
+                                    <div class="layui-upload-list">
+                                        <img style="height:150px;width: 150px;"  class="layui-upload-img" id="demo3">
+                                        <p id="demoText2"></p>
+                                    </div>
+                                    <div style="width: 95px;">
+                                        <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="demo">
+                                            <div class="layui-progress-bar" lay-percent=""></div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             <div class="layui-form-item layui-form-text" style="margin-top: 26px">
                                 <div class="layui-input-block">
                                     <div id="wangEditor" name="postContent" required
@@ -97,6 +123,7 @@
 <script type="text/javascript">
     layui.use(['layer', 'element', 'jquery', 'form','upload'], function () {
         var layer = layui.layer, $ = layui.$, element = layui.element,upload = layui.upload, form = layui.form;
+        select=layer.select();
         var editorD;
 
 
@@ -185,6 +212,23 @@
             }
         });
 
+        select.on($('#postCategoryId option:selected'), function (data) {  //radio-type为lay-filter的属性值
+            alert($('#postCategoryId option:selected').val());
+         /*   var postCategoryId = $('#postCategoryId option:selected').val();
+            if (postCategoryId.value === "4") {
+                $("#upload1").show();
+                $("#upload2").hide();
+                $("#upload3").hide();
+            } else if(postCategoryId.value === "3") {
+                $("#upload1").hide();
+                $("#upload2").show();
+                $("#upload3").hide();
+            }else(postCategoryId.value ==="6") {
+                $("#upload1").hide();
+                $("#upload2").hide();
+                $("#upload3").show();
+            }*/
+        });
 
         window.addBBSPost = function () {
             var postTitle = $("#postTitle").val();
