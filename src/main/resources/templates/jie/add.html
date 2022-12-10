@@ -33,7 +33,7 @@
                                             <option value="0"></option>
                                             <th:block th:unless="${null == bbsPostCategories}">
                                                 <th:block th:each="c : ${bbsPostCategories}">
-                                                    <option th:value="${c.categoryId}" th:text="${c.categoryName}">提问
+                                                    <option th:value="${c.categoryId}" th:text="${c.categoryName}" onclick="selectCategoryId()">提问
                                                     </option>
                                                 </th:block>
                                             </th:block>
@@ -66,7 +66,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="layui-upload" id="upload3" hidden>
                                     <button type="button" class="layui-btn" id="test3" value="3" >上传音频</button>
                                     <div class="layui-upload-list">
@@ -79,7 +78,8 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="layui-form-item" style="margin-top: 20px">
                             <div class="layui-form-item layui-form-text" style="margin-top: 26px">
                                 <div class="layui-input-block">
                                     <div id="wangEditor" name="postContent" required
@@ -123,9 +123,7 @@
 <script type="text/javascript">
     layui.use(['layer', 'element', 'jquery', 'form','upload'], function () {
         var layer = layui.layer, $ = layui.$, element = layui.element,upload = layui.upload, form = layui.form;
-        select=layer.select();
         var editorD;
-
 
         //富文本编辑器 用于商品详情编辑
         const E = window.wangEditor;
@@ -212,23 +210,6 @@
             }
         });
 
-        select.on($('#postCategoryId option:selected'), function (data) {  //radio-type为lay-filter的属性值
-            alert($('#postCategoryId option:selected').val());
-         /*   var postCategoryId = $('#postCategoryId option:selected').val();
-            if (postCategoryId.value === "4") {
-                $("#upload1").show();
-                $("#upload2").hide();
-                $("#upload3").hide();
-            } else if(postCategoryId.value === "3") {
-                $("#upload1").hide();
-                $("#upload2").show();
-                $("#upload3").hide();
-            }else(postCategoryId.value ==="6") {
-                $("#upload1").hide();
-                $("#upload2").hide();
-                $("#upload3").show();
-            }*/
-        });
 
         window.addBBSPost = function () {
             var postTitle = $("#postTitle").val();
@@ -276,6 +257,25 @@
             });
         }
     });
+
+
+    function selectCategoryId() {
+        var postCategoryId = $('#postCategoryId option:selected').val();
+        if (postCategoryId.value === "4") {
+            $("#upload1").show();
+            $("#upload2").hide();
+            $("#upload3").hide();
+        } else if (postCategoryId.value === "3") {
+            $("#upload1").hide();
+            $("#upload2").show();
+            $("#upload3").hide();
+        } else if (postCategoryId.value === "6"){
+            $("#upload1").hide();
+            $("#upload2").hide();
+            $("#upload3").show();
+        }
+    }
+
 </script>
 </body>
 </html>
