@@ -33,6 +33,7 @@ public class BlobController {
     @PostMapping("/writeBlobFile")
     @ApiOperation("文件上传")
     public Result writeBlobFile(@RequestParam("file") MultipartFile file) throws IOException {
+
         String fileName = java.util.UUID.randomUUID() + "—" + file.getOriginalFilename();
 // Get a reference to a blob
         BlobClient blobClient = blobContainerClient.getBlobClient(fileName);

@@ -9,12 +9,12 @@
     <div class="layui-container">
         <!-- 1.渲染页面顶部的帖子分类信息 -->
         <ul class="layui-clear">
-            <li th:class="${null ==categoryId} ?'layui-hide-xs layui-this':''"><a href="/">首页</a></li>
+            <li th:class="${null ==categoryId} ?'layui-hide-xs layui-this':''"><a href="/">Home</a></li>
             <th:block th:unless="${null == bbsPostCategories}">
                 <th:block th:each="c : ${bbsPostCategories}">
                     <li th:class="${null !=categoryId and categoryId==c.categoryId} ?'layui-hide-xs layui-this':''">
                         <a th:href="@{${'/index?categoryId='+c.categoryId}}"
-                           th:text="${c.categoryName}">分享</a>
+                           th:text="${c.categoryName}">Share</a>
                     </li>
                 </th:block>
             </th:block>
@@ -24,7 +24,7 @@
 
         <div class="fly-column-right layui-hide-xs">
             <span class="fly-search"><i class="layui-icon"></i></span>
-            <a th:href="@{/addPostPage}" class="layui-btn">发布新帖</a>
+            <a th:href="@{/addPostPage}" class="layui-btn">AddPost</a>
         </div>
     </div>
 </div>
@@ -35,13 +35,13 @@
             <div class="fly-panel" style="margin-bottom: 0;">
                 <div class="fly-panel-title fly-filter">
                     <a th:href="@{/index(keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}"
-                       th:class="${period == null ? 'layui-this':''}">默认</a>
+                       th:class="${period == null ? 'layui-this':''}">Popular</a>
                     <span class="fly-mid"></span>
                     <a th:class="${period == 'hot7' ? 'layui-this':''}"
-                       th:href="@{/index(period='hot7',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">周榜</a>
+                       th:href="@{/index(period='hot7',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">Hottest</a>
                     <span class="fly-mid"></span>
                     <a th:class="${period == 'hot30' ? 'layui-this':''}"
-                       th:href="@{/index(period='hot30',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">月榜</a>
+                       th:href="@{/index(period='hot30',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">Latest</a>
                     <span class="fly-mid"></span>
                     <span class="fly-filter-right layui-hide-xs">
                         <a th:href="@{/index(orderBy='new',period=${period},keyword=${keyword},categoryId=${categoryId})}"
@@ -54,7 +54,7 @@
                 <!-- 2.渲染帖子分页列表数据 -->
                 <th:block th:if="${#lists.isEmpty(pageResult.list)}">
                     <!-- 无数据时 -->
-                    <div class="fly-none">没有相关数据</div>
+                    <div class="fly-none">No Data</div>
                 </th:block>
                 <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
                     <ul class="fly-list">
@@ -72,7 +72,7 @@
                                 </h2>
                                 <div class="fly-list-info">
                                     <a th:href="@{${'/userCenter/'+bbsPostListEntity.publishUserId}}" link>
-                                        <cite th:text="${bbsPostListEntity.nickName}">程序员十三</cite>
+                                        <cite th:text="${bbsPostListEntity.nickName}">liuy-24</cite>
                                     </a>
                                     <span th:text="${#dates.format(bbsPostListEntity.createTime, 'yyyy-MM-dd HH:mm:ss')}">刚刚</span>
                                     <span class="fly-list-kiss layui-hide-xs" title="赞"><i
