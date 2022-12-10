@@ -26,10 +26,10 @@
                     <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
                 </li>
                 <li class="layui-nav-item">
-                    <a th:href="@{/login}">登入</a>
+                    <a th:href="@{/login}">login</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a th:href="@{/register}">注册</a>
+                    <a th:href="@{/register}">register</a>
                 </li>
             </th:block>
 
@@ -38,7 +38,7 @@
             <th:block th:unless="${session.myBBSUser==null}">
                 <li class="layui-nav-item">
                     <a class="fly-nav-avatar" href="javascript:;">
-                        <cite class="layui-hide-xs" th:text="${session.myBBSUser.nickName}">程序员十三</cite>
+                        <cite class="layui-hide-xs" th:text="${session.myBBSUser.nickName}">liuy-24</cite>
                         <th:block th:if="${session.myBBSUser.gender=='男'}">
                             <i class="iconfont icon-nan"></i>
                         </th:block>
@@ -52,8 +52,8 @@
                         <span class="layui-nav-more"></span>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{/userSet}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                        <dd><a th:href="@{/myCenter}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
+                        <dd><a th:href="@{/userSet}"><i class="layui-icon">&#xe620;</i>setting</a></dd>
+                        <dd><a th:href="@{/myCenter}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>home</a>
                         </dd>
                         <hr style="margin: 5px 0;">
                         <dd><a th:href="@{/logout}" style="text-align: center;">退出</a></dd>

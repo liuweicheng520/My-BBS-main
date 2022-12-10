@@ -9,10 +9,7 @@ import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @Author liuweicheng
@@ -37,7 +34,7 @@ public class TranslatorUtil {
         map.put("Text", content);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         RequestBody body = RequestBody.create(mediaType,
-                gson.toJson(Arrays.asList(map)));
+                gson.toJson(Collections.singletonList(map)));
         Request request = new Request.Builder()
                 .url("https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en")
                 .post(body)
