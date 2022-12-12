@@ -29,8 +29,7 @@ public enum ServiceResultEnum {
 
     LOGIN_VERIFY_CODE_NULL("请输入验证码！"),
 
-    LOGIN_VERIFY_CODE_ERROR("验证码错误！"),
-
+    LOGIN_VERIFY_CODE_ERROR("Verification code error！"),
     LOGIN_ERROR("登录失败！"),
 
     DB_ERROR("database error");

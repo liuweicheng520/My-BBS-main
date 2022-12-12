@@ -34,7 +34,7 @@ public class BBSPostCollectController {
         if (bbsPostCollectService.addCollectRecord(bbsUser.getUserId(), postId)) {
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 
@@ -49,7 +49,7 @@ public class BBSPostCollectController {
         if (bbsPostCollectService.deleteCollectRecord(bbsUser.getUserId(), postId)) {
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 }

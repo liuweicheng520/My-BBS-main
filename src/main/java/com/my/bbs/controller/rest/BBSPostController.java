@@ -104,7 +104,7 @@ public class BBSPostController {
             httpSession.removeAttribute(Constants.VERIFY_CODE_KEY);//清空session中的验证码信息
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 
@@ -120,7 +120,7 @@ public class BBSPostController {
         if (bbsPostService.delBBSPost(bbsUser.getUserId(), postId) > 0) {
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 
@@ -176,7 +176,7 @@ public class BBSPostController {
             httpSession.removeAttribute(Constants.VERIFY_CODE_KEY);//清空session中的验证码信息
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 

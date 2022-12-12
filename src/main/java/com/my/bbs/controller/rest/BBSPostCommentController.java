@@ -1,7 +1,9 @@
 package com.my.bbs.controller.rest;
 
+import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.Screen;
 import com.my.bbs.common.Constants;
 import com.my.bbs.common.ServiceResultEnum;
+import com.my.bbs.config.ContentModeratorClientUtil;
 import com.my.bbs.config.TextAnalyticsClientUtil;
 import com.my.bbs.config.TranslatorUtil;
 import com.my.bbs.entity.BBSPostComment;
@@ -11,6 +13,7 @@ import com.my.bbs.service.BBSPostCommentService;
 import com.my.bbs.service.TbPostCommentService;
 import com.my.bbs.util.Result;
 import com.my.bbs.util.ResultGenerator;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Controller
+@ApiOperation("PostComment")
 public class BBSPostCommentController {
 
     @Resource
@@ -33,8 +37,11 @@ public class BBSPostCommentController {
     private TbPostCommentService tbPostCommentService;
     @Autowired
     private TextAnalyticsClientUtil analyticsClientUtil;
+    @Autowired
+    private ContentModeratorClientUtil contentModeratorClientUtil;
 
     @PostMapping("/replyPost")
+    @ApiOperation("replyPost")
     @ResponseBody
     public Result replyPost(@RequestParam("postId") Long postId,
                             @RequestParam(value = "parentCommentUserId", required = false) Long parentCommentUserId,
@@ -42,17 +49,22 @@ public class BBSPostCommentController {
                             @RequestParam("verifyCode") String verifyCode,
                             HttpSession httpSession) throws IOException {
         if (null == postId || postId < 0) {
-            return ResultGenerator.genFailResult("postId参数错误");
+            return ResultGenerator.genFailResult("The postId parameter is incorrect");
         }
         if (!StringUtils.hasLength(commentBody)) {
-            return ResultGenerator.genFailResult("commentBody参数错误");
+            return ResultGenerator.genFailResult("The commentBody parameter is incorrect");
         }
         if (commentBody.trim().length() > 200) {
-            return ResultGenerator.genFailResult("评论内容过长");
+            return ResultGenerator.genFailResult("The comments are too long");
         }
         String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
         if (!StringUtils.hasLength(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
+
+        }
+        Screen screen = contentModeratorClientUtil.reviewText(commentBody.trim());
+        if (screen.terms() != null && screen.terms().size() > 0) {
+            return ResultGenerator.genFailResult("contains profanity !  suspected: " + screen.terms().get(0).term());
         }
         BBSUser bbsUser = (BBSUser) httpSession.getAttribute(Constants.USER_SESSION_KEY);
 
@@ -69,12 +81,13 @@ public class BBSPostCommentController {
             httpSession.removeAttribute(Constants.VERIFY_CODE_KEY);
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 
 
     @PostMapping("/delReply/{commentId}")
+    @ApiOperation("deleteReply")
     @ResponseBody
     public Result delReply(@PathVariable("commentId") Long commentId,
                            HttpSession httpSession) {
@@ -88,7 +101,7 @@ public class BBSPostCommentController {
         if (bbsPostCommentService.delPostComment(commentId, bbsUser.getUserId())) {
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult("请求失败，请检查参数及账号是否有操作权限");
+            return ResultGenerator.genFailResult("The request failed. Please check whether the parameters and account have operation rights");
         }
     }
 }
