@@ -31,11 +31,9 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8 content detail">
             <div class="fly-panel detail-box">
-                <h1 th:text="${bbsPost.postTitle}">My-BBs</h1>
+                <h1 th:text="${bbsPost.postTitle}">My-BBS</h1>
                 <div class="fly-detail-info">
-                    <div>
-                        <a class="layui-btn layui-btn-xs jie-admin"
-                           th:href="@{'/editPostPage/'+${bbsPost.postId}}">Edit</a>
+                    <div style="height: 10px">
                     </div>
                     <span class="fly-list-nums">
             <a href="#comments"><i class="iconfont" title="Comment">&#xe60c;</i> <th:block
@@ -99,7 +97,7 @@
                 <ul class="jieda" id="jieda">
                     <th:block th:if="${#lists.isEmpty(commentsPage.list)}">
                         <!-- 无数据时 -->
-                        <li class="fly-none">消灭零回复</li>
+                        <li class="fly-none">No Data</li>
                     </th:block>
                     <th:block th:unless="${#lists.isEmpty(commentsPage.list)}">
                         <th:block th:each="bbsCommentListEntity : ${commentsPage.list}">
@@ -122,18 +120,18 @@
                                     </div>
                                 </div>
                                 <div class="detail-body jieda-body photos">
-                                    <p th:text="${bbsCommentListEntity.commentBody}">回复内容</p>
+                                    <p th:text="${bbsCommentListEntity.commentBody}">Reply Content</p>
                                 </div>
                                 <div class="jieda-reply">
                                     <a href="#replyTextarea"
                                        th:onclick="'preReply('+${bbsCommentListEntity.commentUserId}+')'">
                                     <span type="reply">
                                     <i class="iconfont icon-svgmoban53"></i>
-                                    回复
+                                    reply
                                     </span>
                                     </a>
                                     <div class="jieda-admin">
-                                        <span type="del" th:onclick="'delReply('+${bbsCommentListEntity.commentId}+')'">删除</span>
+                                        <span type="del" th:onclick="'delReply('+${bbsCommentListEntity.commentId}+')'">Delete</span>
                                     </div>
                                 </div>
                             </li>
@@ -201,16 +199,16 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="verifyCode" class="layui-form-label">Verification Code</label>
+                            <label for="verifyCode" class="layui-form-label">Code</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="verifyCode" name="verifyCode" required lay-verify="required"
-                                       placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                       placeholder="" autocomplete="off" class="layui-input">
                             </div>
                             <div class="layui-form-mid">
-                             <span><img data-tooltip="看不清楚？换一张"
+                             <span><img data-tooltip="Can't see clearly? Change one"
                                         th:src="@{/common/captcha}"
                                         onclick="this.src='/common/captcha?d='+new Date()*1"
-                                        alt="单击图片刷新！"></span>
+                                        alt="refresh！"></span>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -233,7 +231,7 @@
                     <th:block th:each="bbsEntity : ${hotTopicBBSPostList}">
                         <dd>
                             <a th:href="@{'/detail/'+${bbsEntity.postId}}"
-                               th:text="${bbsEntity.postTitle}">My-BBS开源啦</a>
+                               th:text="${bbsEntity.postTitle}">My-BBS</a>
                             <span><i class="iconfont icon-pinglun1"></i> <th:block
                                     th:text="${bbsEntity.postComments}"></th:block></span>
                         </dd>

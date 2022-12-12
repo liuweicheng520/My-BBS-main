@@ -10,19 +10,19 @@
         <li class="layui-nav-item">
             <a th:href="@{${'/userCenter/'+bbsUser.userId}}">
                 <i class="layui-icon">&#xe609;</i>
-                我的主页
+                MyHome
             </a>
         </li>
         <li class="layui-nav-item">
             <a th:href="@{/myCenter}">
                 <i class="layui-icon">&#xe612;</i>
-                用户中心
+                UserCenter
             </a>
         </li>
         <li class="layui-nav-item layui-this">
             <a th:href="@{/userSet}">
                 <i class="layui-icon">&#xe620;</i>
-                基本设置
+                BasicSetting
             </a>
         </li>
     </ul>
@@ -30,40 +30,42 @@
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li class="layui-this" lay-id="info">我的资料</li>
-                <li lay-id="avatar">头像</li>
-                <li lay-id="pass">密码</li>
+                <li class="layui-this" lay-id="info">MyInfo
+                </li>
+                <li lay-id="avatar">HeadPortrait
+                </li>
+                <li lay-id="pass">Password</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-form layui-form-pane layui-tab-item layui-show">
                     <form method="post" id="updateInfoForm" onsubmit="return false;" action="##">
                         <div class="layui-form-item">
-                            <label for="loginName" class="layui-form-label">邮箱</label>
+                            <label for="loginName" class="layui-form-label">Email</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="loginName" name="loginName"
                                        autocomplete="off" th:value="${bbsUser.loginName}" disabled class="layui-input">
                             </div>
-                            <div class="layui-form-mid layui-word-aux">登录邮箱不可更改</div>
+                            <div class="layui-form-mid layui-word-aux">The login email cannot be changed</div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="nickName" class="layui-form-label">昵称</label>
+                            <label for="nickName" class="layui-form-label">nickname</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="nickName" name="nickName" required lay-verify="required"
                                        autocomplete="off" th:value="${bbsUser.nickName}" class="layui-input">
                             </div>
-                            <div class="layui-form-mid layui-word-aux">支持2-8位的英文和数字昵称</div>
+                            <div class="layui-form-mid layui-word-aux">English and numeric nicknames ranging from 2 to 8 digits are supported</div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="userGender" class="layui-form-label">性别</label>
+                            <label for="userGender" class="layui-form-label">gender</label>
                             <div class="layui-input-inline">
                                 <select name="userGender" id="userGender">
-                                    <option value="1" th:selected="${bbsUser.gender=='男'} ?true:false">男</option>
-                                    <option value="2" th:selected="${bbsUser.gender=='女'} ?true:false">女</option>
+                                    <option value="1" th:selected="${bbsUser.gender=='男'} ?true:false">boy</option>
+                                    <option value="2" th:selected="${bbsUser.gender=='女'} ?true:false">girl</option>
                                 </select>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="location" class="layui-form-label">城市</label>
+                            <label for="location" class="layui-form-label">city</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="location" name="location" autocomplete="off"
                                        th:value="${bbsUser.location}"
@@ -71,16 +73,16 @@
                             </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
-                            <label for="introduce" class="layui-form-label">签名</label>
+                            <label for="introduce" class="layui-form-label">The signature</label>
                             <div class="layui-input-block">
-                                <textarea placeholder="随便写些什么刷下存在感" id="introduce" name="introduce" autocomplete="off"
+                                <textarea placeholder="Just write something and brush it off" id="introduce" name="introduce" autocomplete="off"
                                           th:text="${bbsUser.introduce}"
                                           class="layui-textarea" style="height: 80px;"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit onclick="updateInfo()">
-                                确认修改
+                                Confirm the modification
                             </button>
                         </div>
                     </form>
@@ -89,9 +91,9 @@
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <div class="layui-form-item">
                         <div class="avatar-add">
-                            <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过1M</p>
+                            <p>The recommended size is 168 x 168. The value can be jpg, png, or gif, and cannot exceed 1 MB</p>
                             <button type="button" id="uploadHeadImg" class="layui-btn upload-img">
-                                <i class="layui-icon">&#xe67c;</i>上传头像
+                                <i class="layui-icon">&#xe67c;</i>Upload a profile picture
                             </button>
                             <img id="userHeadImg" th:src="@{${bbsUser.headImgUrl}}">
                             <span class="loading"></span>
@@ -99,7 +101,7 @@
                     </div>
                     <div class="layui-form-item">
                         <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit onclick="updateHeadImg()">
-                            确认修改
+                            Confirm the modification
                         </button>
                     </div>
                 </div>
@@ -107,25 +109,25 @@
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <form method="post" id="passwordForm" onsubmit="return false;" action="##">
                         <div class="layui-form-item">
-                            <label for="originalPassword" class="layui-form-label">当前密码</label>
+                            <label for="originalPassword" style="width: 160px" class="layui-form-label">Current Password</label>
                             <div class="layui-input-inline">
-                                <input type="password" id="originalPassword" name="originalPassword" required
+                                <input type="password"  id="originalPassword" name="originalPassword" required
                                        lay-verify="required"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="newPassword" class="layui-form-label">新密码</label>
+                            <label for="newPassword" style="width: 160px" class="layui-form-label">New password</label>
                             <div class="layui-input-inline">
                                 <input type="password" id="newPassword" name="newPassword" required
                                        lay-verify="required"
                                        autocomplete="off" class="layui-input">
                             </div>
-                            <div class="layui-form-mid layui-word-aux">6到20个字符</div>
+                            <div class="layui-form-mid layui-word-aux">6 to 20 characters</div>
                         </div>
                         <div class="layui-form-item">
                             <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit onclick="updatePassword()">
-                                确认修改
+                                Confirm the modification
                             </button>
                         </div>
                     </form>

@@ -23,16 +23,16 @@
 
     <p class="fly-home-info">
         <i class="iconfont icon-biaoqing1"></i><span>
-        <th:block th:if="${bbsUser.userStatus==0}">账号正常
+        <th:block th:if="${bbsUser.userStatus==0}">The account is normal
         </th:block>
-        <th:block th:if="${bbsUser.userStatus==1}">账号已被封
+        <th:block th:if="${bbsUser.userStatus==1}">The account has been suspended
         </th:block>
         </span>
-        <i class="iconfont icon-shijian"></i><span th:text="${#dates.format(bbsUser.createTime, 'yyyy-MM-dd')+' 加入'}"/>
-        <i class="iconfont icon-chengshi"></i><span th:text="${bbsUser.location}">来自杭州</span>
+        <i class="iconfont icon-shijian"></i><span th:text="${#dates.format(bbsUser.createTime, 'yyyy-MM-dd')+' join'}"/>
+        <i class="iconfont icon-chengshi"></i><span th:text="${bbsUser.location}"></span>
     </p>
 
-    <p class="fly-home-sign" th:text="${bbsUser.introduce}">我不怕千万人阻挡，只怕自己投降</p>
+    <p class="fly-home-sign" th:text="${bbsUser.introduce}"></p>
 </div>
 
 <div class="layui-container">
@@ -41,7 +41,7 @@
             <div class="fly-panel">
                 <h3 class="fly-panel-title">
                     <th:block th:text="${bbsUser.nickName}"></th:block>
-                    近期发布的帖子
+                    Recent posts
                 </h3>
                 <ul class="jie-row">
 
@@ -53,9 +53,9 @@
                                 <i th:text="${#dates.format(bbsPost.createTime, 'yyyy/MM/dd HH:mm:ss')}">2021/08/01</i>
                                 <em class="layui-hide-xs">
                                     <th:block th:text="${bbsPost.postViews}"></th:block>
-                                    阅/
+                                    read/
                                     <th:block th:text="${bbsPost.postComments}"></th:block>
-                                    答</em>
+                                    answer</em>
                             </li>
                         </th:block>
                     </th:block>
@@ -63,7 +63,7 @@
                     <th:block th:if="${#lists.isEmpty(recentPostList)}">
                         <!-- 无数据时 -->
                         <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
-                            <i style="font-size:14px;">没有发布任何帖子</i></div>
+                            <i style="font-size:14px;">No posts were posted</i></div>
                     </th:block>
 
                 </ul>
@@ -73,12 +73,12 @@
         <div class="layui-col-md6 fly-home-da">
             <div class="fly-panel">
                 <h3 class="fly-panel-title">
-                    <th:block th:text="${bbsUser.nickName}">程序员十三</th:block>
-                    最近的评论
+                    <th:block th:text="${bbsUser.nickName}"></th:block>
+                    A recent review
                 </h3>
                 <ul class="home-jieda">
                     <th:block th:if="${#lists.isEmpty(recentCommentList)}">
-                        <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><span>近期没有回复</span>
+                        <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><span>No reply recently</span>
                         </div>
                     </th:block>
 
@@ -87,8 +87,8 @@
                             <li>
                                 <p>
                                     <span th:text="${#dates.format(recentComment.commentCreateTime, 'yyyy/MM/dd HH:mm:ss')}">1分钟前</span>
-                                    在<a th:href="@{${'/detail/'+recentComment.postId}}"
-                                        th:text="${recentComment.postTitle}" target="_blank">My-BBS开源啦</a>中评论：
+                                    in<a th:href="@{${'/detail/'+recentComment.postId}}"
+                                        th:text="${recentComment.postTitle}" target="_blank"></a>comment：
                                 </p>
                                 <div class="home-dacontent" th:text="${recentComment.commentBody}">
                                 </div>
