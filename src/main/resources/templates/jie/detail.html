@@ -8,12 +8,12 @@
 <div class="fly-panel fly-column">
     <div class="layui-container">
         <ul class="layui-clear">
-            <li th:class="${null ==categoryId} ?'layui-hide-xs layui-this':''"><a href="/">首页</a></li>
+            <li th:class="${null ==categoryId} ?'layui-hide-xs layui-this':''"><a href="/">Home</a></li>
             <th:block th:unless="${null == bbsPostCategories}">
                 <th:block th:each="c : ${bbsPostCategories}">
                     <li th:class="${null !=categoryId and categoryId==c.categoryId} ?'layui-hide-xs layui-this':''">
                         <a th:href="@{${'/index?categoryId='+c.categoryId}}"
-                           th:text="${c.categoryName}">分享</a>
+                           th:text="${c.categoryName}">Share</a>
                     </li>
                 </th:block>
             </th:block>
@@ -22,7 +22,7 @@
         </ul>
 
         <div class="fly-column-right layui-hide-xs">
-            <a th:href="@{/addPostPage}" class="layui-btn">发布新帖</a>
+            <a th:href="@{/addPostPage}" class="layui-btn">Add Post</a>
         </div>
     </div>
 </div>
@@ -31,16 +31,16 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8 content detail">
             <div class="fly-panel detail-box">
-                <h1 th:text="${bbsPost.postTitle}">My-BBs开源啦</h1>
+                <h1 th:text="${bbsPost.postTitle}">My-BBs</h1>
                 <div class="fly-detail-info">
                     <div>
                         <a class="layui-btn layui-btn-xs jie-admin"
-                           th:href="@{'/editPostPage/'+${bbsPost.postId}}">编辑</a>
+                           th:href="@{'/editPostPage/'+${bbsPost.postId}}">Edit</a>
                     </div>
                     <span class="fly-list-nums">
-            <a href="#comments"><i class="iconfont" title="评论">&#xe60c;</i> <th:block
+            <a href="#comments"><i class="iconfont" title="Comment">&#xe60c;</i> <th:block
                     th:text="${bbsPost.postComments}"></th:block></a>
-            <i class="iconfont" title="人气">&#xe60b;</i> <th:block th:text="${bbsPost.postViews}"></th:block>
+            <i class="iconfont" title="Popularity">&#xe60b;</i> <th:block th:text="${bbsPost.postViews}"></th:block>
           </span>
                 </div>
                 <div class="detail-about">
@@ -49,25 +49,22 @@
                     </a>
                     <div class="fly-detail-user">
                         <a th:href="@{${'/userCenter/'+bbsUser.userId}}" class="fly-link">
-                            <cite th:text="${bbsUser.nickName}">程序员十三</cite>
-                            <span>
-                              <th:block th:if="${bbsUser.userStatus==0}">账号正常
-                              </th:block>
-                              <th:block th:if="${bbsUser.userStatus==1}">账号已被封
-                              </th:block>
-                            </span>
+                            <cite th:text="${bbsUser.nickName}">liuy-24</cite>
                         </a>
                     </div>
                     <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
-                        <span th:text="${#dates.format(bbsPost.createTime, 'yyyy-MM-dd')}">2021-08-01</span>
-                        <span style="margin-left: 6px; padding-right: 10px; color: #FF7200"
-                              th:text="${'最新修改时间：'+#dates.format(bbsPost.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}">2021-08-01</span>
+                        <span th:text="${#dates.format(bbsPost.createTime, 'yyyy-MM-dd HH:mm:ss')}">2021-08-01</span>
+                        <!--                        <span style="margin-left: 6px; padding-right: 10px; color: #FF7200"-->
+                        <!--                              th:text="${'Latest modification time：'+#dates.format(bbsPost.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}">2021-08-01</span>-->
                     </div>
                 </div>
                 <div class="layui-upload-list">
-                    <img  th:if="${bbsPost.postCategoryName} == 'Picture'" th:src="${bbsPost.mediaUrl}"     style="height:95px;width: 95px;"  class="layui-upload-img" id="demo1">
-                    <video th:if="${bbsPost.postCategoryName} == 'Video'" th:src="${bbsPost.mediaUrl}" autoplay style="height: 500px;width: 640px;" controls  id="demo2"></video>
-                    <audio  th:if="${bbsPost.postCategoryName} == 'Music'" th:src="${bbsPost.mediaUrl}" autoplay style="height:50px;width: 300px;" controls id="demo3"></audio>
+                    <img th:if="${bbsPost.postCategoryName} == 'Picture'" th:src="${bbsPost.mediaUrl}"
+                         style="height:95px;width: 95px;" class="layui-upload-img" id="demo1">
+                    <video th:if="${bbsPost.postCategoryName} == 'Video'" th:src="${bbsPost.mediaUrl}" autoplay
+                           style="height: 500px;width: 640px;" controls id="demo2"></video>
+                    <audio th:if="${bbsPost.postCategoryName} == 'Music'" th:src="${bbsPost.mediaUrl}" autoplay
+                           style="height:50px;width: 300px;" controls id="demo3"></audio>
 
                 </div>
 
@@ -79,7 +76,7 @@
                         <a href="##" th:onclick="'collect('+${bbsPost.postId}+')'">
                         <span style="color: red;">
                             <i class="iconfont icon-zan"></i>
-                            收藏&nbsp;&nbsp;(<th:block th:text="${bbsPost.postCollects}"></th:block>)
+                            Collect&nbsp;&nbsp;(<th:block th:text="${bbsPost.postCollects}"></th:block>)
                         </span>
                         </a>
                     </th:block>
@@ -87,7 +84,7 @@
                         <a href="##" th:onclick="'delCollect('+${bbsPost.postId}+')'">
                         <span style="color: grey;">
                             <i class="iconfont icon-zan"></i>
-                            取消收藏&nbsp;&nbsp;(<th:block th:text="${bbsPost.postCollects}"></th:block>)
+                            Cancel Collect&nbsp;&nbsp;(<th:block th:text="${bbsPost.postCollects}"></th:block>)
                         </span>
                         </a>
                     </th:block>
@@ -96,7 +93,7 @@
 
             <div class="fly-panel detail-box" id="comments">
                 <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
-                    <legend>回帖</legend>
+                    <legend>Reply</legend>
                 </fieldset>
 
                 <ul class="jieda" id="jieda">
@@ -199,12 +196,12 @@
                         <div class="layui-form-item layui-form-text">
                             <div class="layui-input-block">
                                 <textarea id="commentBody" name="commentBody" required lay-verify="required"
-                                          placeholder="请输入内容" class="layui-textarea fly-editor"
+                                          placeholder="Please enter the content" class="layui-textarea fly-editor"
                                           style="height: 150px;"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label for="verifyCode" class="layui-form-label">验证码</label>
+                            <label for="verifyCode" class="layui-form-label">Verification Code</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="verifyCode" name="verifyCode" required lay-verify="required"
                                        placeholder="请输入验证码" autocomplete="off" class="layui-input">
@@ -218,7 +215,8 @@
                         </div>
                         <div class="layui-form-item">
                             <input type="hidden" name="jid" value="123">
-                            <button class="layui-btn" lay-filter="*" lay-submit onclick="reply()">提交回复</button>
+                            <button class="layui-btn" lay-filter="*" lay-submit onclick="reply()">Submit a Response
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -226,10 +224,10 @@
         </div>
         <div class="layui-col-md4">
             <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">本周热议</dt>
+                <dt class="fly-panel-title">Hot Topic</dt>
                 <th:block th:if="${#lists.isEmpty(hotTopicBBSPostList)}">
                     <!-- 无数据时 -->
-                    <div class="fly-none">没有相关数据</div>
+                    <div class="fly-none">No Data</div>
                 </th:block>
                 <th:block th:unless="${#lists.isEmpty(hotTopicBBSPostList)}">
                     <th:block th:each="bbsEntity : ${hotTopicBBSPostList}">
@@ -242,29 +240,6 @@
                     </th:block>
                 </th:block>
             </dl>
-
-            <div class="fly-panel">
-                <div class="fly-panel-title">
-                    我的公众号
-                </div>
-                <div class="fly-panel-main">
-                    <a href="https://juejin.im/user/59199e22a22b9d0058279886" target="_blank">
-                        <img style="max-width: 100%;" th:src="@{/images/my-gzh-qrcode.jpg}">
-                    </a>
-                </div>
-            </div>
-
-            <div class="fly-panel">
-                <div class="fly-panel-title">
-                    我的新书
-                </div>
-                <div class="fly-panel-main">
-                    <a href="https://item.jd.com/12890115.html" target="_blank">
-                        <img style="max-width: 100%;" th:src="@{/images/my-book01.png}">
-                    </a>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -295,7 +270,11 @@
             var $ = layui.$;
             var verifyCode = $("#verifyCode").val();
             if (!validLength(verifyCode, 5)) {
-                layer.alert('Please enter the correct verification code!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct verification code!', {
+                    title: 'Warn',
+                    skin: 'layui-layer-molv',
+                    icon: 2
+                });
                 return false;
             }
             var commentBody = $("#commentBody").val();
