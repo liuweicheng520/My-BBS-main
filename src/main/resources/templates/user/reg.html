@@ -86,31 +86,31 @@
             var $ = layui.$;
             var loginName = $("#loginName").val();
             if (!validEmail(loginName)) {
-                layer.alert('请输入正确的登录名!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct login name!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var nickName = $("#nickName").val();
             if (!validUserName(nickName)) {
-                layer.alert('请输入正确的昵称!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请输入正确的昵称!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var password = $("#password").val();
             if (!validPassword(password)) {
-                layer.alert('请输入正确的密码格式!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct password format!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var repass = $("#repass").val();
             if (!validPassword(repass)) {
-                layer.alert('请输入正确的密码格式!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct password format!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             if (repass != password) {
-                layer.alert('确认密码与密码字段不相同!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('确认密码与密码字段不相同!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var verifyCode = $("#verifyCode").val();
             if (!validLength(verifyCode, 5)) {
-                layer.alert('请输入正确的验证码!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct verification code!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var params = $("#registerForm").serialize();
@@ -128,7 +128,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('操作失败!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }

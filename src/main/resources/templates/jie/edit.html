@@ -137,24 +137,24 @@
             var postId = $("#postId").val();
             var postTitle = $("#postTitle").val();
             if (isNull(postTitle)) {
-                layer.alert('请输入标题!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请输入标题!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
             var verifyCode = $("#verifyCode").val();
             if (!validLength(verifyCode, 5)) {
-                layer.alert('请输入正确的验证码!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct verification code!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
             var postCategoryId = $('#postCategoryId option:selected').val();
             if (isNull(postCategoryId)) {
-                layer.alert('请选择分类!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请选择分类!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
 
             var postContent = editorD.txt.html();
 
             if (!validLength(postContent, 100000)) {
-                layer.alert('内容超出长度!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('内容超出长度!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
             var url = '/editPost';
@@ -176,7 +176,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('operation failure!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }

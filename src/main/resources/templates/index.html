@@ -43,13 +43,13 @@
                     <a th:class="${period == 'hot30' ? 'layui-this':''}"
                        th:href="@{/index(period='hot30',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">Latest</a>
                     <span class="fly-mid"></span>
-                    <span class="fly-filter-right layui-hide-xs">
-                        <a th:href="@{/index(orderBy='new',period=${period},keyword=${keyword},categoryId=${categoryId})}"
-                           th:class="${orderBy == 'new' ? 'layui-this':''}">按最新</a>
-                            <span class="fly-mid"></span>
-                        <a th:href="@{/index(orderBy='comment',period=${period},keyword=${keyword},categoryId=${categoryId})}"
-                           th:class="${orderBy == 'comment' ? 'layui-this':''}">按热议</a>
-                    </span>
+<!--                    <span class="fly-filter-right layui-hide-xs">-->
+<!--                        <a th:href="@{/index(orderBy='new',period=${period},keyword=${keyword},categoryId=${categoryId})}"-->
+<!--                           th:class="${orderBy == 'new' ? 'layui-this':''}">latest</a>-->
+<!--                            <span class="fly-mid"></span>-->
+<!--                        <a th:href="@{/index(orderBy='comment',period=${period},keyword=${keyword},categoryId=${categoryId})}"-->
+<!--                           th:class="${orderBy == 'comment' ? 'layui-this':''}">Hottest</a>-->
+<!--                    </span>-->
                 </div>
                 <!-- 2.渲染帖子分页列表数据 -->
                 <th:block th:if="${#lists.isEmpty(pageResult.list)}">
@@ -66,19 +66,19 @@
                                 </a>
                                 <h2>
                                     <a href="##" class="layui-badge"
-                                       th:text="${bbsPostListEntity.postCategoryName}">分享</a>
+                                       th:text="${bbsPostListEntity.postCategoryName}">Share</a>
                                     <a th:href="@{${'/detail/'+bbsPostListEntity.postId}}"
-                                       th:text="${bbsPostListEntity.postTitle}">My-BBS开源啦</a>
+                                       th:text="${bbsPostListEntity.postTitle}"></a>
                                 </h2>
                                 <div class="fly-list-info">
                                     <a th:href="@{${'/userCenter/'+bbsPostListEntity.publishUserId}}" link>
                                         <cite th:text="${bbsPostListEntity.nickName}">liuy-24</cite>
                                     </a>
-                                    <span th:text="${#dates.format(bbsPostListEntity.createTime, 'yyyy-MM-dd HH:mm:ss')}">刚刚</span>
-                                    <span class="fly-list-kiss layui-hide-xs" title="赞"><i
+                                    <span th:text="${#dates.format(bbsPostListEntity.createTime, 'yyyy-MM-dd HH:mm:ss')}">Just Now</span>
+                                    <span class="fly-list-kiss layui-hide-xs" title="like"><i
                                             class="iconfont icon-zan"></i> <th:block
                                             th:text="${bbsPostListEntity.postCollects}"></th:block></span>
-                                    <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="评论"></i> <th:block
+                                    <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="comment"></i> <th:block
                                             th:text="${bbsPostListEntity.postComments}"></th:block></span>
                                 </div>
                                 <div class="fly-list-badge">
@@ -139,7 +139,7 @@
 </div>
 
 <div class="fly-footer">
-    <p>My-BBS社区 2021 &copy; <a href="https://github.com/ZHENFENG13/My-BBS" target="_blank">十三</a></p>
+    <p>liuy-24 2022&copy;</p>
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>
@@ -147,9 +147,8 @@
     layui.use(['layer', 'element', 'jquery'], function () {
         var layer = layui.layer, $ = layui.$, element = layui.element;
         var device = layui.device();
-        //阻止IE7以下访问
         if (device.ie && device.ie < 8) {
-            layer.alert('如果您非得使用 IE 浏览器访问社区，那么请使用 IE8+');
+            layer.alert('If you must use Internet Explorer to access the community, use Internet Explorer 8+');
         }
         //搜索
         $('.fly-search').on('click', function () {
@@ -162,7 +161,7 @@
                 , maxWidth: 10000
                 , skin: 'fly-layer-search'
                 , content: ['<form action="/index">'
-                    , '<input autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="keyword">'
+                    , '<input autocomplete="off" placeholder="To search for content, press Enter\n" type="text" name="keyword">'
                     , '</form>'].join('')
                 , success: function (layero) {
                     var input = layero.find('input');

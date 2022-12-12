@@ -282,7 +282,7 @@
         var device = layui.device();
         //阻止IE7以下访问
         if (device.ie && device.ie < 8) {
-            layer.alert('如果您非得使用 IE 浏览器访问社区，那么请使用 IE8+');
+            layer.alert('If you must use Internet Explorer to access the community, use Internet Explorer 8+');
         }
 
         //回复按钮的触发事件
@@ -295,12 +295,12 @@
             var $ = layui.$;
             var verifyCode = $("#verifyCode").val();
             if (!validLength(verifyCode, 5)) {
-                layer.alert('请输入正确的验证码!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct verification code!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var commentBody = $("#commentBody").val();
             if (isNull(commentBody)) {
-                layer.alert('请输入评论!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter a comment!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var params = $("#replyForm").serialize();
@@ -311,10 +311,10 @@
                 data: params,
                 success: function (result) {
                     if (result.resultCode == 200) {
-                        layer.confirm('评论成功!将刷新本页面...', {
+                        layer.confirm('Comment success!', {
                             icon: 3,
                             skin: 'layui-layer-molv',
-                            title: '提示'
+                            title: 'Message'
                         }, function (index) {
                             layer.close(index);
                             window.location.reload();
@@ -325,7 +325,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('operation failure!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }
@@ -338,10 +338,10 @@
                 url: '/delReply/' + commentId,
                 success: function (result) {
                     if (result.resultCode == 200) {
-                        layer.confirm('删除成功!将刷新本页面...', {
+                        layer.confirm('successfully delete!', {
                             icon: 3,
                             skin: 'layui-layer-molv',
-                            title: '提示'
+                            title: 'Message'
                         }, function (index) {
                             layer.close(index);
                             window.location.reload();
@@ -352,7 +352,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('operation failure!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }
@@ -365,10 +365,10 @@
                 url: '/addCollect/' + postId,
                 success: function (result) {
                     if (result.resultCode == 200) {
-                        layer.confirm('收藏成功!将刷新本页面...', {
+                        layer.confirm('Successful collection!', {
                             icon: 3,
                             skin: 'layui-layer-molv',
-                            title: '提示'
+                            title: 'Message'
                         }, function (index) {
                             layer.close(index);
                             window.location.reload();
@@ -379,7 +379,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('operation failure!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }
@@ -392,10 +392,10 @@
                 url: '/delCollect/' + postId,
                 success: function (result) {
                     if (result.resultCode == 200) {
-                        layer.confirm('取消收藏成功!将刷新本页面...', {
+                        layer.confirm('Cancel collection success!', {
                             icon: 3,
                             skin: 'layui-layer-molv',
-                            title: '提示'
+                            title: 'Message'
                         }, function (index) {
                             layer.close(index);
                             window.location.reload();
@@ -406,7 +406,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('operation failure!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }

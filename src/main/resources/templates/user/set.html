@@ -181,22 +181,22 @@
             var $ = layui.$;
             var nickName = $("#nickName").val();
             if (!validUserName(nickName)) {
-                layer.alert('请输入正确的昵称!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请输入正确的昵称!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var userGender = $('#userGender option:selected').val();
             if (isNull(userGender)) {
-                layer.alert('请选择性别!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请选择性别!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
             var location = $("#location").val();
             if (isNull(location)) {
-                layer.alert('请输入所在城市!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请输入所在城市!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
             var introduce = $("#introduce").val();
             if (isNull(introduce)) {
-                layer.alert('请输入个性签名!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('请输入个性签名!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return;
             }
             var params = $("#updateInfoForm").serialize();
@@ -214,7 +214,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('操作失败!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }
@@ -224,7 +224,7 @@
             var $ = layui.$;
             var userHeadImg = $('#userHeadImg')[0].src;
             if (isNull(userHeadImg)) {
-                layer.alert('头像不能为空字符串!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('头像不能为空字符串!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var url = '/updateHeadImg?userHeadImg='+userHeadImg;
@@ -240,7 +240,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('操作失败!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }
@@ -250,16 +250,16 @@
             var $ = layui.$;
             var originalPassword = $("#originalPassword").val();
             if (!validPassword(originalPassword)) {
-                layer.alert('请输入正确的密码格式!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct password format!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var newPassword = $("#newPassword").val();
             if (!validPassword(newPassword)) {
-                layer.alert('请输入正确的密码格式!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct password format!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             if (newPassword != newPassword) {
-                layer.alert('确认密码与密码字段不相同!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('确认密码与密码字段不相同!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var params = $("#passwordForm").serialize();
@@ -277,7 +277,7 @@
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: '提醒', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('操作失败!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }
