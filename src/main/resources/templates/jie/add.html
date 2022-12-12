@@ -188,6 +188,7 @@
             }
         })
 
+        var mediaUrl;
         //常规使用 - 普通图片上传
         var uploadInst = upload.render({
             elem: '#test1'
@@ -208,6 +209,7 @@
                 }
                 //上传成功的一些操作
                 //……
+                mediaUrl = res.data;
                 element.progress('demo', '100%');
                 layer.msg('上传成功', {icon: 16, time: 1000});
             }
@@ -237,6 +239,7 @@
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
+
                     $('#demo2').attr('src', result); //图片链接（base64）
                 });
 
@@ -251,6 +254,8 @@
                 //上传成功的一些操作
                 //……
                 element.progress('demo', '100%');
+                mediaUrl = res.data;
+
                 layer.msg('上传成功', {icon: 16, time: 1000});
             }
             , error: function () {
@@ -293,6 +298,7 @@
                 }
                 //上传成功的一些操作
                 //……
+                mediaUrl = res.data;
                 element.progress('demo', '100%');
                 layer.msg('上传成功', {icon: 16, time: 1000});
             }
@@ -343,7 +349,8 @@
             var url = '/addPost';
             var data = {
                 "postTitle": postTitle, "verifyCode": verifyCode,
-                "postCategoryId": postCategoryId, "postContent": postContent
+                "postCategoryId": postCategoryId, "postContent": postContent,
+                "mediaUrl":mediaUrl
             };
             $.ajax({
                 type: 'POST',//方法类型

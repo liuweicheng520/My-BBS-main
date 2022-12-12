@@ -20,7 +20,7 @@
     <sql id="Base_Column_List">
     post_id, publish_user_id, post_title, post_category_id, post_category_name,
     post_status, post_views, post_comments, post_collects, last_update_time,
-    create_time
+    create_time,media_url,del_flag
     </sql>
     <sql id="Blob_Column_List">
         post_content

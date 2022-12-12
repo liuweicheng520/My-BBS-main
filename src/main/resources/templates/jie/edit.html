@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="header::head-fragment('编辑帖子')">
 </head>
@@ -10,23 +10,23 @@
         <!--<div class="fly-none">没有权限</div>-->
         <div class="layui-form layui-form-pane">
             <div class="layui-tab layui-tab-brief" lay-filter="user">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">编辑帖子</li>
-                </ul>
+<!--                <ul class="layui-tab-title">-->
+<!--                    <li class="layui-this">编辑帖子</li>-->
+<!--                </ul>-->
                 <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                     <div class="layui-tab-item layui-show">
                         <form method="post" id="postForm" onsubmit="return false;" action="##">
                             <div class="layui-row layui-col-space15 layui-form-item">
                                 <input type="hidden" id="postId" th:value="${bbsPost.postId}">
                                 <div class="layui-col-md6">
-                                    <label for="postTitle" class="layui-form-label">标题</label>
+                                    <label for="postTitle" class="layui-form-label">Title</label>
                                     <div class="layui-input-block">
                                         <input type="text" id="postTitle" name="postTitle" required
                                                autocomplete="off" class="layui-input" th:value="${bbsPost.postTitle}">
                                     </div>
                                 </div>
                                 <div class="layui-col-md6">
-                                    <label class="layui-form-label">所在专栏</label>
+                                    <label class="layui-form-label">Category</label>
                                     <div class="layui-input-block">
                                         <select name="class" lay-filter="column"
                                                 id="postCategoryId">
@@ -43,6 +43,7 @@
                                 </div>
                             </div>
                             <div class="layui-form-item layui-form-text">
+
                                 <div class="layui-input-block">
                                     <div id="wangEditor" name="postContent" required
                                          placeholder="详细描述"

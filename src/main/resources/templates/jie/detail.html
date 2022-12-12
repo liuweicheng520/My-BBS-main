@@ -64,8 +64,16 @@
                               th:text="${'最新修改时间：'+#dates.format(bbsPost.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}">2021-08-01</span>
                     </div>
                 </div>
+                <div class="layui-upload-list">
+                    <img  th:if="${bbsPost.postCategoryName} == 'Picture'" th:src="${bbsPost.mediaUrl}"     style="height:95px;width: 95px;"  class="layui-upload-img" id="demo1">
+                    <video th:if="${bbsPost.postCategoryName} == 'Video'" th:src="${bbsPost.mediaUrl}" autoplay style="height: 500px;width: 640px;" controls  id="demo2"></video>
+                    <audio  th:if="${bbsPost.postCategoryName} == 'Music'" th:src="${bbsPost.mediaUrl}" autoplay style="height:50px;width: 300px;" controls id="demo3"></audio>
+
+                </div>
+
                 <div class="detail-body photos" th:utext="${bbsPost.postContent}">
                 </div>
+
                 <div style="text-align: center;">
                     <th:block th:unless="${currentUserCollectFlag}">
                         <a href="##" th:onclick="'collect('+${bbsPost.postId}+')'">

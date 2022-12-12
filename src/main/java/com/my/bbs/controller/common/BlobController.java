@@ -40,7 +40,7 @@ public class BlobController {
         blobClient.upload(file.getInputStream());
         Result resultSuccess = ResultGenerator.genSuccessResult();
         resultSuccess.setResultCode(0);
-        resultSuccess.setData("liuy24-asc4gffvfjehgsg0.z01.azurefd.net/liuy24/" + fileName);
+        resultSuccess.setData("https://liuy24-asc4gffvfjehgsg0.z01.azurefd.net/liuy24/" + fileName);
         return resultSuccess;
     }
 }

@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * 
  *
- * @date 2022-12-09 14:28:23
+ * @date 2022-12-10 17:27:45
  */
 @Getter
 @Setter
@@ -91,10 +91,9 @@ public class TbBbsPost implements Serializable {
 	private String mediaUrl;
 
 	// 
-	@TableLogic
-	@Column(name = "is_del")
-	@ApiModelProperty(name="isDel",value="")
-	private Integer isDel;
+	@Column(name = "del_flag")
+	@ApiModelProperty(name="delFlag",value="")
+	private Integer delFlag;
 
 
 }
