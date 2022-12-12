@@ -70,11 +70,11 @@ public class BBSPostCommentController {
 
         System.out.println(TranslatorUtil.translate(commentBody));
         TbPostComment bbsPostComment = new TbPostComment();
-        bbsPostComment.setCommentBody(TranslatorUtil.translate(commentBody));
+        bbsPostComment.setCommentBody(commentBody);
         bbsPostComment.setCommentUserId(bbsUser.getUserId());
         bbsPostComment.setParentCommentUserId(parentCommentUserId);
         bbsPostComment.setPostId(postId);
-        bbsPostComment.setSentiment(analyticsClientUtil.analyzeSentiment(bbsPostComment.getCommentBody()));
+        bbsPostComment.setSentiment(analyticsClientUtil.analyzeSentiment(TranslatorUtil.translate(commentBody)));
         bbsPostComment.setCommentCreateTime(new Date());
 
         if (tbPostCommentService.saved(bbsPostComment) > 0) {
