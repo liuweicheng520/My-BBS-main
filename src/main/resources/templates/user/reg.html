@@ -10,58 +10,58 @@
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title">
-                <li><a th:href="@{/login}">登入</a></li>
-                <li class="layui-this">注册</li>
+                <li><a th:href="@{/login}">Login</a></li>
+                <li class="layui-this">Register</li>
             </ul>
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form layui-form-pane">
                         <form method="post" id="registerForm" onsubmit="return false;" action="##">
                             <div class="layui-form-item">
-                                <label for="loginName" class="layui-form-label">邮箱</label>
+                                <label for="loginName" class="layui-form-label">Email</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="loginName" name="loginName" required lay-verify="email"
                                            autocomplete="off" class="layui-input">
                                 </div>
-                                <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
+                                <div class="layui-form-mid layui-word-aux">Will be your unique login name</div>
                             </div>
                             <div class="layui-form-item">
-                                <label for="nickName" class="layui-form-label">昵称</label>
+                                <label for="nickName" class="layui-form-label">Nickname</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="nickName" name="nickName" required lay-verify="required"
                                            autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label for="password" class="layui-form-label">密码</label>
+                                <label for="password" class="layui-form-label">Password</label>
                                 <div class="layui-input-inline">
                                     <input type="password" id="password" name="password" required lay-verify="required"
                                            autocomplete="off" class="layui-input">
                                 </div>
-                                <div class="layui-form-mid layui-word-aux">6到20个字符</div>
+                                <div class="layui-form-mid layui-word-aux">6 to 20 characters</div>
                             </div>
                             <div class="layui-form-item">
-                                <label for="repass" class="layui-form-label">确认密码</label>
+                                <label for="repass" class="layui-form-label">Confirm Password</label>
                                 <div class="layui-input-inline">
                                     <input type="password" id="repass" name="repass" required lay-verify="required"
                                            autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label for="verifyCode" class="layui-form-label">验证码</label>
+                                <label for="verifyCode" class="layui-form-label">Verification code</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="verifyCode" name="verifyCode" required lay-verify="required"
-                                           placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                           placeholder="" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid">
-                  <span><img data-tooltip="看不清楚？换一张"
+                  <span><img data-tooltip="Can't see clearly? Change one"
                              th:src="@{/common/captcha}"
                              onclick="this.src='/common/captcha?d='+new Date()*1"
-                             alt="单击图片刷新！"></span>
+                             alt="Click the picture to refresh!"></span>
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="*" lay-submit onclick="register()">立即注册</button>
+                                <button class="layui-btn" lay-filter="*" lay-submit onclick="register()">Register Now</button>
                             </div>
                         </form>
                     </div>
@@ -73,7 +73,7 @@
 </div>
 
 <div class="fly-footer">
-    <p>My-BBS社区 2021 &copy; <a href="https://github.com/ZHENFENG13/My-BBS" target="_blank">十三</a></p>
+    <p>My-BBS 2022 Hu-T1</p>
 </div>
 
 <script th:src="@{/js/public.js}"></script>
@@ -91,7 +91,7 @@
             }
             var nickName = $("#nickName").val();
             if (!validUserName(nickName)) {
-                layer.alert('请输入正确的昵称!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Please enter the correct nickname!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var password = $("#password").val();
@@ -105,7 +105,7 @@
                 return false;
             }
             if (repass != password) {
-                layer.alert('确认密码与密码字段不相同!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
+                layer.alert('Confirm that the password is different from the password field!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 return false;
             }
             var verifyCode = $("#verifyCode").val();
@@ -121,14 +121,14 @@
                 data: params,
                 success: function (result) {
                     if (result.resultCode == 200) {
-                        layer.alert('注册成功!', {title: '信息', skin: 'layui-layer-molv', icon: 1});
+                        layer.alert('Registration succeeded!', {title: 'info', skin: 'layui-layer-molv', icon: 1});
                     } else {
                         layer.msg(result.message);
                     }
                     ;
                 },
                 error: function () {
-                    layer.alert('操作失败!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
+                    layer.alert('Operation failed!', {title: 'Warn', skin: 'layui-layer-molv', icon: 2});
                 }
             });
         }

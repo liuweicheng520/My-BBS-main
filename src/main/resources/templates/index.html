@@ -37,12 +37,6 @@
                     <a th:href="@{/index(keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}"
                        th:class="${period == null ? 'layui-this':''}">Popular</a>
                     <span class="fly-mid"></span>
-                    <a th:class="${period == 'hot7' ? 'layui-this':''}"
-                       th:href="@{/index(period='hot7',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">Hottest</a>
-                    <span class="fly-mid"></span>
-                    <a th:class="${period == 'hot30' ? 'layui-this':''}"
-                       th:href="@{/index(period='hot30',keyword=${keyword},categoryId=${categoryId},orderBy=${orderBy})}">Latest</a>
-                    <span class="fly-mid"></span>
 <!--                    <span class="fly-filter-right layui-hide-xs">-->
 <!--                        <a th:href="@{/index(orderBy='new',period=${period},keyword=${keyword},categoryId=${categoryId})}"-->
 <!--                           th:class="${orderBy == 'new' ? 'layui-this':''}">latest</a>-->
@@ -72,7 +66,7 @@
                                 </h2>
                                 <div class="fly-list-info">
                                     <a th:href="@{${'/userCenter/'+bbsPostListEntity.publishUserId}}" link>
-                                        <cite th:text="${bbsPostListEntity.nickName}">liuy-24</cite>
+                                        <cite th:text="${bbsPostListEntity.nickName}">Hu-T1</cite>
                                     </a>
                                     <span th:text="${#dates.format(bbsPostListEntity.createTime, 'yyyy-MM-dd HH:mm:ss')}">Just Now</span>
                                     <span class="fly-list-kiss layui-hide-xs" title="like"><i
@@ -139,7 +133,7 @@
 </div>
 
 <div class="fly-footer">
-    <p>liuy-24 2022&copy;</p>
+    <p>Hu-T1 2022&copy;</p>
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>

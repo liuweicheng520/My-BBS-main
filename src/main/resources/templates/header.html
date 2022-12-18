@@ -12,6 +12,7 @@
 <div th:fragment="header-fragment" class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
+            <img th:src="@{/images/my-bbs-icon.png}" style="height: 40px" alt="My-BBS">
         </a>
 
 
@@ -20,7 +21,7 @@
             <!-- 未登入的状态 -->
             <th:block th:if="${session.myBBSUser==null}">
                 <li class="layui-nav-item">
-                    <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+                    <a class="iconfont icon-touxiang layui-hide-xs"  th:href="@{/login}"></a>
                 </li>
                 <li class="layui-nav-item">
                     <a th:href="@{/login}">Login</a>
